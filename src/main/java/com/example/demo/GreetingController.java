@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
 public class GreetingController {
 
-    private static final String template = "Hello, %s!";
+    private static final String template = "Hello, %s!!";
     private final AtomicLong counter = new AtomicLong();
 
     @RequestMapping("/greeting")
