@@ -9,6 +9,11 @@ pipeline{
                 echo '>>> building Code'
                 sh 'gradle clean build'
             }
+            post{
+                always{
+                    junit allowEmptyResults: true, testResults: '**/test-results/**/TEST*.xml' 
+                }
+            }
         }
         stage('Docker'){
             environment {
