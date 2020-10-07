@@ -1,22 +1,7 @@
 pipeline{
 
     agent {
-        kubernetes {
-        yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
-spec:
-  containers:
-  - name: gradle
-    image: gradle
-    command:
-    - cat
-    tty: true
-"""
-        }
+        kubernetes { yamlFile 'container.yaml' }
     }
     stages{
         stage('Build'){
