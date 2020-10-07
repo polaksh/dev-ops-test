@@ -3,26 +3,16 @@ pipeline{
     agent none
     stages{
         stage('Build'){
-        agent {
-            kubernetes {
-                cloud 'kubernetes'
-                yaml '''
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
-spec:
-  containers:
-  - name: gradle
-    image: gradle:latest
-    command:
-    - cat
-    tty: true'''
+            agent {
+                kubernetes {
+                    containerTemplate {
+                        name 'gradle'
+                        image 'gradle:latest'
+                        ttyEnabled true
+                        command 'cat'
+                    }
+                }
             }
-        }
-
-
             steps{
                 echo '>>> building Code'
                 sh 'gradle clean build'
@@ -35,23 +25,16 @@ spec:
         }
         stage('Docker'){
             agent {
-            kubernetes {
-                cloud 'kubernetes'
-                yaml '''
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
-spec:
-  containers:
-  - name: docker-builder
-    env:
-    - name: DOCKER_HOST
-      value: tcp://localhost:2375
-    command:
-    - cat
-    tty: true'''
+                kubernetes {
+                    containerTemplate {
+                        name 'docker'
+                        ttyEnabled true
+                        command 'cat'
+                        privileged true
+                        envVars: [ 
+                            envVar(key: 'DOCKER_HOST', value: 'tcp://localhost:2375')
+                        ]
+                    }
                 }
             }
             environment {
