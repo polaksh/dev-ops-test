@@ -8,14 +8,15 @@ pipeline{
 apiVersion: v1
 kind: Pod
 metadata:
-  name: agent
+  labels:
+    tes1: some-label-value1
 spec:
   containers:
-    - name: gradle-agent
-      image: gradle
-  imagePullSecrets:
-    - name: myregistrykey
-'''
+  - name: gradle
+    image: gradle
+    command:
+    - cat
+    tty: true'''
       }
     }
 
