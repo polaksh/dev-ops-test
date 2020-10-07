@@ -4,19 +4,12 @@ pipeline{
         cloud 'kubernetes'
         inheritFrom 'default'
         namespace 'default'
-        yaml '''
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    tes1: some-label-value1
-spec:
-  containers:
-  - name: gradle
-    image: gradle:latest
-    command:
-    - cat
-    tty: true'''
+          containerTemplate {
+            name 'gradle-agent'
+            image 'gradle:latest'
+            ttyEnabled true
+            command 'cat'
+          }
       }
     }
 
