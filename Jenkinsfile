@@ -9,16 +9,13 @@ pipeline{
                     yaml """
 apiVersion: v1
 kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
 spec:
   containers:
-  - name: gradle
-    image: gradle:latest
-    command:
-    - cat
-    tty: true
+  - command:
+    - "cat"
+  image: "gradle:latest"
+  name: "gradle"
+  tty: true
 """
                 }
             }
@@ -40,9 +37,6 @@ spec:
                     yaml """
 apiVersion: v1
 kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
 spec:
   containers:
   - name: docker-builder
