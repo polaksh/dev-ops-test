@@ -1,6 +1,22 @@
 pipeline{
     agent {
-        docker {image 'gradle'}
+      kubernetes {
+        cloud 'kubernetes'
+        inheritFrom 'default'
+        namespace 'default'
+        yaml '''
+apiVersion: v1
+kind: Pod
+metadata:
+  name: agent
+spec:
+  containers:
+    - name: gradle-agent
+      image: gradle
+  imagePullSecrets:
+    - name: myregistrykey
+'''
+      }
     }
 
     stages{
