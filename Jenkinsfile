@@ -13,7 +13,7 @@ metadata:
 spec:
   containers:
   - name: gradle
-    image: gradle
+    image: gradle:latest
     command:
     - cat
     tty: true'''
