@@ -11,6 +11,7 @@ pipeline{
             }
             post{
                 always{
+                    echo 'foo'
                     junit allowEmptyResults: true, testResults: '**/test-results/**/TEST*.xml' 
                 }
             }
