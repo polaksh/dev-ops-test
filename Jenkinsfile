@@ -1,13 +1,15 @@
 pipeline{
-    agent {
-        docker {image 'gradle'}
-    }
 
+    agent {
+        kubernetes { yamlFile 'container.yaml' }
+    }
     stages{
         stage('Build'){
             steps{
-                echo '>>> building Code'
-                sh 'gradle clean build'
+                container('gradle'){
+                    echo '>>> building Code'
+                    sh 'gradle clean build'
+                }
             }
             post{
                 always{
@@ -20,8 +22,10 @@ pipeline{
                 DOCKER_BUILDKIT = "1"
             }
             steps{
-                echo '>>> building Docker'
-                sh 'docker build .'
+                container('docker'){
+                    echo '>>> building Docker'
+                    echo "sh 'docker build .'"
+                }
             }
         }
     }
