@@ -19,7 +19,7 @@ group = 'com.example'
 if (project.hasProperty('projVersion')) {
   project.version = project.projVersion
 } else {
-  project.version = '10.0.0'
+  project.version = '0.0.1-SNAPSHOT'
 }
 
 sourceCompatibility = 1.8
